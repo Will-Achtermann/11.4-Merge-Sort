@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        int[] numbers = {38, 27, 43, 3, 9, 82, 10};
+        int[] numbers = {3100, 12, 56, 43, 20, 18, 9, 5};
 
         System.out.println("Before sorting:");
         printArray(numbers);
@@ -11,13 +11,20 @@ public class Main {
         printArray(numbers);
     }
 
-    public static int[] mergeSort(int[] array) {
-        int[] left = new int[array.length/2];
-        int[]right = new int[array.length - left.length];
-        if (array.length == 1){
-            return array;
+    public static void mergeSort(int[] array) {
+        if(array.length > 1){
+            int[] left = new int[array.length/2];
+            for (int i = 0; i < left.length; i++){
+                left[i] = array[i];
+            }
+            int[]right = new int[array.length - left.length];
+            for (int i = 0; i < right.length; i++){
+                right[i] = array[i + left.length];
+            }
+            mergeSort(left);
+            mergeSort(right);
+            merge(array, left, right);
         }
-        merge(array, mergeSort(left), mergeSort(right));
     }
 
     public static void merge(int[] array, int[] left, int[] right) {
@@ -34,12 +41,12 @@ public class Main {
             }
             arr++;
         }
-        if (l == left.length - 1 && r < right.length - 1){
+        if (l == left.length && r < right.length){
             for (int i = arr; i < array.length; i++){
                 array[i] = right[r];
                 r++;
             }
-        } else if (r == right.length - 1 && l < left.length - 1){
+        } else if (r == right.length && l < left.length){
             for (int i = arr; i < array.length; i++){
                 array[i] = left[l];
                 l++;
